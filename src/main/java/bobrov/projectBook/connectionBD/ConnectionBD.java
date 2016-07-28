@@ -14,6 +14,18 @@ public class ConnectionBD {
         this.USERPASSWORD = USERPASSWORD;
     }
 
+    public String getURL() {
+        return URL;
+    }
+
+    public String getUSERNAME() {
+        return USERNAME;
+    }
+
+    public String getUSERPASSWORD() {
+        return USERPASSWORD;
+    }
+
     @Override
     public String toString() {
         return "ConnectionBD{" +

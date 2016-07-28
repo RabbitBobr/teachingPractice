@@ -8,7 +8,6 @@ import bobrov.projectBook.gui.Forms;
 public class Main {
     public static void main(String[] args) {
 
-        Forms.addUser();
-        System.out.println(Forms.getUser());
+        Forms.start();
     }
 }

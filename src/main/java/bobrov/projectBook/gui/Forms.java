@@ -1,5 +1,7 @@
 package bobrov.projectBook.gui;
 
+import bobrov.projectBook.Book;
+import bobrov.projectBook.connectionBD.ConnectToBD;
 import bobrov.projectBook.connectionBD.ConnectionBD;
 import bobrov.projectBook.connectionBD.User;
 
@@ -13,112 +15,34 @@ import java.awt.event.ActionListener;
  */
 public class Forms {
     private static ConnectionBD connect;
-    private static User user;
-    private static boolean flag = false;
-    public static void addConnect() {
-        flag = true;
-        final JFrame frame = new JFrame("Add new connect to BD");
-        frame.setSize(300, 300);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(new GridBagLayout());
 
-        JLabel urlLabel = new JLabel("URL: ");
-        JLabel nameLabel = new JLabel("User Name: ");
-        JLabel passLabel = new JLabel("Password: ");
+    public static void start() {
+        JFrame form = new JFrame("Учебные материалы");
+        form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        form.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        form.setLayout(new BorderLayout());
 
-        final JTextField nameField = new JTextField();
-        final JTextField urlField = new JTextField();
-        final JTextField passField = new JTextField();
+        final ConnectToBD connect = new ConnectToBD(AddConnectPanel.setConnect());
+        TableModel model = new TableModel(connect.readDate());
+        JTable table = new JTable(model);
+        JScrollPane scrollTable = new JScrollPane(table);
+        scrollTable.setPreferredSize(new Dimension(400, 400));
 
-        JButton addButton = new JButton("Add Connect");
-        addButton.addActionListener(new ActionListener() {
+        JPanel panelUg = new JPanel();
+        panelUg.setBackground(Color.CYAN);
+        JButton addDateButton = new JButton("Добавить данные");
+        addDateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connect = new ConnectionBD(urlField.getText(),nameField.getText(), passField.getText());
-                flag = false;
-
-                frame.dispose();
-
+                connect.addDate(new Book("автор", "книга", "текст", false));
             }
         });
+        panelUg.setLayout(new FlowLayout());
+        panelUg.add(addDateButton);
 
-        frame.add(urlLabel, new GridBagConstraints(0,0,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(urlField, new GridBagConstraints(1,0,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(nameLabel, new GridBagConstraints(0,1,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(nameField, new GridBagConstraints(1,1,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(passLabel, new GridBagConstraints(0,2,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(passField, new GridBagConstraints(1,2,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.add(addButton, new GridBagConstraints(0,3,2,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(2,2,2,2), 0,0));
-        frame.setVisible(true);
-        frame.pack();
+        form.add(scrollTable, BorderLayout.CENTER);
+        form.add(panelUg, BorderLayout.SOUTH);
 
-    }
-    public static void addUser() {
-
-        final JFrame frame = new JFrame("Add new User");
-        frame.setSize(300, 200);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(new GridBagLayout());
-
-        JLabel nameLabel = new JLabel("User Name: ");
-        JLabel passLabel = new JLabel("Password: ");
-
-        final JTextField nameField = new JTextField();
-        final JPasswordField passField = new JPasswordField();
-
-        JButton addButton = new JButton("Add User");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user = new User(nameField.getText(), passField.getText(), getConnect());
-                frame.dispose();
-            }
-        });
-        frame.add(nameLabel, new GridBagConstraints(0,0,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1,1,1,1), 0,0));
-        frame.add(nameField, new GridBagConstraints(1,0,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1,1,1,1), 0,0));
-        frame.add(passLabel, new GridBagConstraints(0,1,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1,1,1,1), 0,0));
-        frame.add(passField, new GridBagConstraints(1,1,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1,1,1,1), 0,0));
-        frame.add(addButton, new GridBagConstraints(0,2,1,1,1,1,
-                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1,1,1,1), 0,0));
-
-        addConnect();
-        while(flag){};
-        frame.setVisible(true);
-        frame.pack();
-    }
-
-    public static ConnectionBD getConnect() {
-        while(flag){};
-
-        return connect;
-    }
-
-    public static User getUser() {
-        while(user == null){}
-        return user;
-
+        form.setVisible(true);
     }
 }

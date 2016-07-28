@@ -5,33 +5,64 @@ package bobrov.projectBook;
  */
 public class Book {
 
-    private String name;
-    private Author author;
-    private int publicationDate;
-    private boolean readingStatus;
-    private String topic;
-    private String URL;
+    private int id;
+    private String author;
+    private String bookName;
+    private String tema;
+    private boolean status;
 
-    public Book(String name, Author author, int publicationDate, boolean readingStatus,
-                String topic, String URL) {
-        this.name = name;
+    public Book(int id, String author, String bookName, String tema, boolean status) {
+        this.id = id;
         this.author = author;
-        this.publicationDate = publicationDate;
-        this.readingStatus = readingStatus;
-        this.topic = topic;
-        this.URL = URL;
+        this.bookName = bookName;
+        this.tema = tema;
+        this.status = status;
     }
 
-    public Book(String name, Author author, boolean readingStatus, String topic) {
-        this.name = name;
+    public Book(String author, String bookName, String tema, boolean status) {
         this.author = author;
-        this.readingStatus = readingStatus;
-        this.topic = topic;
+        this.bookName = bookName;
+        this.tema = tema;
+        this.status = status;
     }
 
-    public Book(String name, boolean readingStatus) {
-        this.name = name;
-        this.readingStatus = readingStatus;
-        this.author = new Author("noname","noname", "noname", "nocountry");
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getTema() {
+        return tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
