@@ -36,7 +36,10 @@ public class ConnectToBD {
         try {
             ResultSet setBook = statement.executeQuery("SELECT * FROM mybookcollections.book");
             while(setBook.next()){
-                arr.add(new Book(setBook.getInt(1), setBook.getString(2), setBook.getString(3), setBook.getString(5), (setBook.getInt(4)==0)?false:true));
+
+                    arr.add(new Book(setBook.getInt(1), setBook.getString(2), setBook.getString(3), setBook.getInt(4),
+                            setBook.getString(5),((setBook.getInt(6) == 1) ? true : false ), setBook.getString(7)));
+
 
             }
         } catch (SQLException e) {
@@ -45,26 +48,36 @@ public class ConnectToBD {
         return arr;
     }
 
-    public void updateDate(Book book, String pole, Object update) {
+    public void updateDate(int id, String pole, Object update) {
 
             try {
                 if (update instanceof Boolean)
                     statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((Boolean)update?1:0) + " " +
-                            "WHERE id="+ book.getId());
+                            "WHERE id="+ id);
                 else
                     statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((String)update) + " " +
-                            "WHERE id="+ book.getId());
+                            "WHERE id="+ id);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
     }
 
     public void addDate(Book book) {
-        int status = book.isStatus()?1:0;
-        try {
-            statement.execute("INSERT INTO mybookcollections.book(author, bookName, status, topic) VALUES " +
-                                " (" + book.getAuthor() + ", " + book.getBookName() + ", " + status + ", " + book.getTema() + ")");
 
+        try {
+            statement.execute("INSERT INTO mybookcollections.book(author, bookName, status, Tema, Data, link) VALUES " +
+                                " ('" + book.getBookName() + "', '" + book.getBookName() + "', " + (book.isStatus() ? 1 : 0) + ", '" + book.getTema() + "', " + book.getData() +" , '" + book.getLink() + "')");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteDate(int[] id) {
+
+        try {
+            for (int i=0; i<id.length; i++)
+                statement.execute("DELETE FROM mybookcollections.book WHERE idBook=" + id[i] + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -5,33 +5,53 @@ package bobrov.projectBook;
  */
 public class Book {
 
-    private int id;
+    private int idBook;
     private String author;
     private String bookName;
     private String tema;
     private boolean status;
+    private int data;
+    private String link;
 
-    public Book(int id, String author, String bookName, String tema, boolean status) {
-        this.id = id;
+    public Book(int idBook, String bookName, String author, int data, String tema, boolean status, String link) {
+        this.idBook = idBook;
         this.author = author;
         this.bookName = bookName;
         this.tema = tema;
         this.status = status;
+        this.data = data;
+        this.link = link;
     }
 
-    public Book(String author, String bookName, String tema, boolean status) {
+    public Book(String bookName, String author, int data, String tema, boolean status, String link) {
         this.author = author;
         this.bookName = bookName;
         this.tema = tema;
         this.status = status;
+        this.data = data;
+        this.link = link;
     }
 
-    public int getId() {
-        return id;
+    public String getLink() {
+        return link;
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    public int getIdBook() {
+        return idBook;
+    }
+
+    public void setIdBook(int id) {
+        this.idBook = id;
     }
 
     public String getAuthor() {

@@ -10,6 +10,6 @@ public class AddConnectPanel {
     public static ConnectionBD setConnect() {
         return new ConnectionBD("jdbc:mysql://" +
                 "127.0.0.1:3306/mybookcollections",
-                "Rabbik", "Dtytnfhbq");
+                "root", "root");
     }
 }
