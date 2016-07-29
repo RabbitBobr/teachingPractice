@@ -30,7 +30,7 @@ public class ConnectToBD {
 
             }
         }
-
+//Считывает все данные из БД и возвращает список с ними
     public ArrayList<Book> readDate() {
         ArrayList<Book> arr = new ArrayList<>();
         try {
@@ -47,32 +47,32 @@ public class ConnectToBD {
         }
         return arr;
     }
-
+//Вносит необходимые изменения в БД
     public void updateDate(int id, String pole, Object update) {
 
             try {
                 if (update instanceof Boolean)
                     statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((Boolean)update?1:0) + " " +
-                            "WHERE id="+ id);
+                            "WHERE idBook="+ id);
                 else
                     statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((String)update) + " " +
-                            "WHERE id="+ id);
+                            "WHERE idBook="+ id);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
     }
-
+//Добавляет новую строку в БД
     public void addDate(Book book) {
 
         try {
             statement.execute("INSERT INTO mybookcollections.book(author, bookName, status, Tema, Data, link) VALUES " +
-                                " ('" + book.getBookName() + "', '" + book.getBookName() + "', " + (book.isStatus() ? 1 : 0) + ", '" + book.getTema() + "', " + book.getData() +" , '" + book.getLink() + "')");
+                                " ('" + book.getAuthor() + "', '" + book.getBookName() + "', " + (book.isStatus() ? 1 : 0) + ", '" + book.getTema() + "', " + book.getData() +" , '" + book.getLink() + "')");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+//Удаляет строку из БД
     public void deleteDate(int[] id) {
 
         try {
@@ -82,14 +82,20 @@ public class ConnectToBD {
             e.printStackTrace();
         }
     }
-
+//Завершает соединение с БД
     public void endConnect() {
         try {
             statement.close();
             connection.close();
+            System.out.println("EndConnect");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+//Меняет статус на прочитано
+    public void statusTrue(int[] id) {
+        for (int i : id)
+            updateDate(i, "status", true);
     }
 
 

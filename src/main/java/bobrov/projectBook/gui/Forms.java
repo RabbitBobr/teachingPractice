@@ -67,16 +67,17 @@ public class Forms {
 //Создание таблицы для отображения данных из БД
         JScrollPane scrollTable = new JScrollPane(table);
         scrollTable.setPreferredSize(new Dimension(400, 400));
-//Нижняя панель с кнопками (устанавливается ниже таблицы
+//Нижняя панель с кнопками (устанавливается ниже таблицы)
         JPanel panelUg = new JPanel();
         panelUg.setBackground(Color.CYAN);
         JButton addDateButton = new JButton("Добавить данные");
         addDateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connect.addDate(new Book("книга", "автор", 2016, "Тема", false, "link"));
-                model.setRowCount(connect.readDate());
-                model.fireTableDataChanged();
+                AddDataForm.addNewData(connect, model);
+
+
+
             }
         });
         JButton delDateButton = new JButton("Удалить выделенные строки");
