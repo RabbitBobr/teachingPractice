@@ -64,7 +64,12 @@ public class TableModel extends AbstractTableModel {
         return "";
     }
 
-
+    public Book getBook (int id) {
+        for (Book b : row)
+            if (b.getIdBook() == id)
+                return b;
+        return null;
+    }
 
 
 }

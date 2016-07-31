@@ -4,11 +4,12 @@ package bobrov.projectBook.connectionBD;
  * Created by пк on 27.07.2016.
  */
 public class ConnectionBD {
-    private final String URL;
-    private final String USERNAME;
-    private final String USERPASSWORD;
+    private final String URL ;
+    private final String USERNAME ;
+    private final String USERPASSWORD ;
 
     public ConnectionBD(String URL, String USERNAME, String USERPASSWORD) {
+
         this.URL = URL;
         this.USERNAME = USERNAME;
         this.USERPASSWORD = USERPASSWORD;
@@ -34,4 +35,6 @@ public class ConnectionBD {
                 ", USERPASSWORD='" + USERPASSWORD + '\'' +
                 '}';
     }
+
+
 }

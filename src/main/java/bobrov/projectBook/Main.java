@@ -1,10 +1,8 @@
 package bobrov.projectBook;
 
-import bobrov.projectBook.connectionBD.ConnectToBD;
-import bobrov.projectBook.connectionBD.ConnectionBD;
-import bobrov.projectBook.gui.AddConnectPanel;
-import bobrov.projectBook.gui.AddDataForm;
-import bobrov.projectBook.gui.Forms;
+
+import bobrov.projectBook.gui.ConnectionMySQLForm;
+
 
 /**
  * Created by пк on 27.07.2016.
@@ -12,7 +10,7 @@ import bobrov.projectBook.gui.Forms;
 public class Main {
     public static void main(String[] args) {
 
-        Forms.start();
+        ConnectionMySQLForm.start();
 
 
 

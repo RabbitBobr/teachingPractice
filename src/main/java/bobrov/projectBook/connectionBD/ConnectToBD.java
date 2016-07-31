@@ -13,22 +13,42 @@ import java.util.ArrayList;
 /**
  * Created by пк on 28.07.2016.
  */
-public class ConnectToBD {
+public class ConnectToBD  {
         private Driver driver;
         private Statement statement;
         private Connection connection;
 
-        public ConnectToBD(ConnectionBD connect) {
+
+        public ConnectToBD(ConnectionBD connect) throws SQLException {
 
 
-            try  {
+
                 this.driver = new FabricMySQLDriver();
                 this.connection = DriverManager.getConnection(connect.getURL(), connect.getUSERNAME(), connect.getUSERPASSWORD());
                 this.statement = connection.createStatement();
+                ResultSet rs;
+                rs = statement.executeQuery("SHOW DATABASES;");
+                while(rs.next()){
+                    if(rs.getString("Database").equals("mybookcollections")){
 
-            }catch (SQLException e) {
 
-            }
+                        return;
+                    }
+                }
+                statement.execute("CREATE SCHEMA `mybookcollections` DEFAULT CHARACTER SET utf8mb4 ;");
+                statement.execute("CREATE TABLE `mybookcollections`.`book` (\n" +
+                        "  `idBook` INT NOT NULL AUTO_INCREMENT,\n" +
+                        "  `bookName` VARCHAR(45) NOT NULL,\n" +
+                        "  `author` VARCHAR(45) NOT NULL,\n" +
+                        "  `Data` INT(4) NOT NULL,\n" +
+                        "  `Tema` VARCHAR(45) NOT NULL,\n" +
+                        "  `status` BIT(1) NOT NULL,\n" +
+                        "  `link` LONGTEXT NULL,\n" +
+                        "  PRIMARY KEY (`idBook`))\n" +
+                        "ENGINE = InnoDB\n" +
+                        "DEFAULT CHARACTER SET = utf8;");
+
+
         }
 //Считывает все данные из БД и возвращает список с ними
     public ArrayList<Book> readDate() {
@@ -51,11 +71,14 @@ public class ConnectToBD {
     public void updateDate(int id, String pole, Object update) {
 
             try {
-                if (update instanceof Boolean)
+                if (pole.equals("status"))
                     statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((Boolean)update?1:0) + " " +
                             "WHERE idBook="+ id);
+                else if (pole.equals("Data"))
+                    statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((Integer)update) + " " +
+                            "WHERE idBook="+ id);
                 else
-                    statement.execute("UPDATE mybookcollections.book SET " + pole + "=" + ((String)update) + " " +
+                    statement.execute("UPDATE mybookcollections.book SET " + pole + "='" + ((String)update) + "' " +
                             "WHERE idBook="+ id);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -97,6 +120,8 @@ public class ConnectToBD {
         for (int i : id)
             updateDate(i, "status", true);
     }
+
+
 
 
 

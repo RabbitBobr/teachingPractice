@@ -2,6 +2,7 @@ package bobrov.projectBook.gui;
 
 import bobrov.projectBook.Book;
 import bobrov.projectBook.connectionBD.ConnectToBD;
+import bobrov.projectBook.exceptions.NotDateException;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;
@@ -10,9 +11,7 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.ArrayList;
+
 
 /**
  * Created by Rabbik on 29.07.2016.
@@ -49,20 +48,28 @@ public class AddDataForm {
         final JTextField linkField = new JTextField();
 
         final JCheckBox statusCheckBox = new JCheckBox("Книга прочитана");
-
+//Описание кнопки добавления книги в БД
         JButton addDataButton = new JButton("Добавить книгу");
         addDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connect.addDate(new Book(bookNAmeField.getText(), authorField.getText(),
-                        (dataField.getText().isEmpty()?2016:Integer.parseInt(dataField.getText())),
-                        temaField.getText(), statusCheckBox.isSelected(), linkField.getText()));
+                try {
+                        if (bookNAmeField.getText().isEmpty() || temaField.getText().isEmpty())
+                            throw new NotDateException();
+                    connect.addDate(new Book(bookNAmeField.getText(), authorField.getText().isEmpty() ? "author unknown" : authorField.getText(),
+                            (dataField.getText().isEmpty() ? 1900 : Integer.parseInt(dataField.getText())),
+                            temaField.getText(), statusCheckBox.isSelected(), linkField.getText()));
+
+
                 bookNAmeField.setText("");
                 authorField.setText("");
                 temaField.setText("");
                 dataField.setText("");
                 linkField.setText("");
                 statusCheckBox.setSelected(false);
+                } catch (NotDateException ex) {
+                    ex.messageForm("Заполните все поля, отмеченные звездочкой *");
+                }
                 model.setRowCount(connect.readDate());
                 model.fireTableDataChanged();
                 form.setVisible(true);

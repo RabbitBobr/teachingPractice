@@ -42,49 +42,37 @@ public class Book {
         return data;
     }
 
-    public void setData(int data) {
-        this.data = data;
-    }
+
 
     public int getIdBook() {
         return idBook;
     }
 
-    public void setIdBook(int id) {
-        this.idBook = id;
-    }
+
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+
 
     public String getBookName() {
         return bookName;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
+
 
     public String getTema() {
         return tema;
     }
 
-    public void setTema(String tema) {
-        this.tema = tema;
-    }
+
 
     public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+
 
     @Override
     public String toString() {
