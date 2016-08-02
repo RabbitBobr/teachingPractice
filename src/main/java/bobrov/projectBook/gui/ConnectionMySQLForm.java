@@ -38,10 +38,12 @@ public class ConnectionMySQLForm {
                         throw new ErrorFormatDateException();
                         Forms forms = new Forms(new ConnectionBD(urlField.getText(), userNameField.getText(), passField.getText()));
                         forms.start();
+                        form.dispose();
                 }catch (ErrorFormatDateException ex) {
                     ex.messageForm("Все поля должны быть заполнены");
                 } catch (SQLException ex) {
-                    new ErrorFormatDateException().messageForm("Сщединение не установленно.");
+                    //new ErrorFormatDateException().messageForm("Сщединение не установленно.");
+                    ex.printStackTrace();
                 }
             }
         });

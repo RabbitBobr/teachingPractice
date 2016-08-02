@@ -37,7 +37,7 @@ public class Forms {
         form.setExtendedState(JFrame.MAXIMIZED_BOTH);
         form.setLayout(new BorderLayout());
  //Подключение к БД
-        //final ConnectToBD connect = new ConnectToBD();
+
         final TableModel model = new TableModel(connect.readDate());
         final JTable table = new JTable(model);
        table.addMouseListener(new MouseAdapter() {
@@ -170,8 +170,8 @@ public class Forms {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TreeSet<Integer> list = new TreeSet<Integer>();
-
-                if (textSearchField.getText().isEmpty())
+                model.setRowCount(connect.readDate());
+                if (textSearchField.getText().isEmpty() || (!nameBookBox.isSelected() && !authorBox.isSelected() && !temaBox.isSelected()))
                     for (Book b : connect.readDate())
                         list.add(b.getIdBook());
                 else {

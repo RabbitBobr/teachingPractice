@@ -1,31 +1,34 @@
 package bobrov.projectBook.connectionBD;
 
 import bobrov.projectBook.Book;
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
 
-import java.sql.Statement;
+import com.mysql.jdbc.Connection;
 
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.Driver;
+import com.mysql.jdbc.Statement;
+
+
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * Created by пк on 28.07.2016.
  */
 public class ConnectToBD  {
-        private Driver driver;
+
         private Statement statement;
         private Connection connection;
 
 
         public ConnectToBD(ConnectionBD connect) throws SQLException {
-
-
-
-                this.driver = new FabricMySQLDriver();
-                this.connection = DriverManager.getConnection(connect.getURL(), connect.getUSERNAME(), connect.getUSERPASSWORD());
-                this.statement = connection.createStatement();
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            this.connection = (Connection) DriverManager.getConnection(connect.getURL(), connect.getUSERNAME(), connect.getUSERPASSWORD());
+                this.statement = (Statement) connection.createStatement();
                 ResultSet rs;
                 rs = statement.executeQuery("SHOW DATABASES;");
                 while(rs.next()){
@@ -123,8 +126,5 @@ public class ConnectToBD  {
 
 
 
-
-
-
-    }
+}
 
