@@ -33,6 +33,8 @@ public class Book {
     }
 
     public String getLink() {
+        if (link == null)
+            return "";
         return link;
     }
 
